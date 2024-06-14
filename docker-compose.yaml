@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  db:
+    image: bitnami/postgresql:15.1.0
+    restart: always
+    ports:
+      - 5431:5432
+    volumes:
+      - postgres_data:/bitnami/postgresql
+    env_file:
+      - .env
+    environment:
+      - POSTGRESQL_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRESQL_USERNAME=${POSTGRES_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESQL_POSTGRES_PASSWORD=${POSTGRESQL_POSTGRES_PASSWORD}
+      - POSTGRESQL_REPLICATION_MODE=master
+    networks:
+      - atom-dev
+  s3storage:
+    container_name: s3storage
+    image: docker.io/bitnami/minio:2024
+    user: root
+    ports:
+      - '9200:9000'
+      - '9201:9001'
+    volumes:
+      - 'minio_storage:/bitnami/minio/data'
+    env_file:
+      - .env
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    networks:
+      - atom-dev
+
+volumes:
+  postgres_data:
+  minio_storage:
+
+networks:
+  atom-dev:
+    external: true

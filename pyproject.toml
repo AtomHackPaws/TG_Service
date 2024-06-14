@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "atomic-hack"
+version = "0.1.0"
+description = ""
+authors = ["Nikita Kotov <nik-kotov-98@inbox.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^3.7.0"
+pydantic = "^2.7.4"
+pydantic-settings = "^2.3.2"
+sqlalchemy = "^2.0.30"
+aiobotocore = "^2.13.0"
+asyncpg = "^0.29.0"
+python-dotenv = "^1.0.1"
+alembic = "^1.13.1"
+cachetools = "5.3.1"
+aiokafka = "^0.10.0"
+faststream = {extras = ["kafka"], version = "^0.5.12"}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+pre-commit = "^3.7.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
