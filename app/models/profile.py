@@ -1,9 +1,11 @@
+from typing import Optional
 import uuid
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, ForeignKey
+from sqlalchemy import BigInteger
+from sqlalchemy.dialects.postgresql import insert
 
-from app.db.base import Base
+from app.db import Base, async_session 
 
 from datetime import datetime
 
@@ -16,13 +18,12 @@ class Profile(Base):
     created_at: Mapped[datetime] = mapped_column(
         nullable=False, server_default=sa.func.now()
     )
-    check_community: Mapped[bool] = mapped_column(nullable=False, default=False)
-    master_link: Mapped[uuid.UUID]
-    community_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("community.id", ondelete="CASCADE"), nullable=False, index=True
-    )
-
+    master_link: Mapped[Optional[uuid.UUID]] = mapped_column(nullable=True)
+    
     results = relationship("Result", back_populates="profile", cascade="all, delete")
-    community = relationship(
-        "Community", back_populates="profiles", passive_deletes=True
-    )
+
+    @classmethod
+    async def create_user(cls, id, username):
+        stmt = insert(Profile).values(id=id, username=username)
+        stmt = stmt.on_conflict_do_nothing(index_elements=['id'])
+        await async_session().execute(stmt)
