@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+import punq
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,21 +12,12 @@ async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False
 
 
 Base = declarative_base()
-    
-
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session() as session:  # type: ignore
-        yield session
 
 
-class Transaction:
-    async def __aenter__(self):
-        self.session: AsyncSession = async_session()
-        return self
+class SessionMaker:
+    def __new__(cls):
+        return sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-    async def __aexit__(self, exception_type, exception, traceback):
-        if exception:
-            await self.session.rollback()
-        else:
-            await self.session.commit()
-        await self.session.close()
+
+container = punq.Container()
+container.register(sessionmaker, SessionMaker)

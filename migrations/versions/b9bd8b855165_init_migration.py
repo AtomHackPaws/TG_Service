@@ -1,7 +1,7 @@
 """init migration
 
 Revision ID: b9bd8b855165
-Revises: 
+Revises:
 Create Date: 2024-06-14 22:30:52.447406
 
 """
@@ -25,7 +25,9 @@ def upgrade() -> None:
         "profile",
         sa.Column("id", sa.BigInteger(), nullable=False),
         sa.Column("username", sa.String(), nullable=False),
-        sa.Column("created_at", sa.DateTime(), server_default=sa.text("now()"), nullable=False),
+        sa.Column(
+            "created_at", sa.DateTime(), server_default=sa.text("now()"), nullable=False
+        ),
         sa.Column("master_link", sa.Uuid(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -39,7 +41,9 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_result_id"), "result", ["id"], unique=False)
-    op.create_index(op.f("ix_result_profile_id"), "result", ["profile_id"], unique=False)
+    op.create_index(
+        op.f("ix_result_profile_id"), "result", ["profile_id"], unique=False
+    )
     # ### end Alembic commands ###
 
 

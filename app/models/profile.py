@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger
 from sqlalchemy.dialects.postgresql import insert
 
-from app.db import Base, async_session 
+from app.db import Base, db_session
 
 from datetime import datetime
 
@@ -19,11 +19,11 @@ class Profile(Base):
         nullable=False, server_default=sa.func.now()
     )
     master_link: Mapped[Optional[uuid.UUID]] = mapped_column(nullable=True)
-    
+
     results = relationship("Result", back_populates="profile", cascade="all, delete")
 
     @classmethod
     async def create_user(cls, id, username):
         stmt = insert(Profile).values(id=id, username=username)
-        stmt = stmt.on_conflict_do_nothing(index_elements=['id'])
-        await async_session().execute(stmt)
+        stmt = stmt.on_conflict_do_nothing(index_elements=["id"])
+        await db_session.get().execute(stmt)
