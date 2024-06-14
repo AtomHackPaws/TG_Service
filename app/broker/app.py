@@ -9,7 +9,5 @@ broker = KafkaBroker(settings.KAFKA_URL)
 
 app = FastStream(broker)
 
+broker_send = broker.publisher("photo", batch=True)
 
-@broker.subscriber("test_batch")
-async def handle_msg(msg, logger: Logger) -> str:
-    logger.info(msg)
