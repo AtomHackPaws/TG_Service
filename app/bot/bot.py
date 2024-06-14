@@ -2,6 +2,7 @@ from aiogram import Dispatcher, F
 from app.config import bot
 from app.handlers import list_of_routes
 from app.middlewares.album import AlbumMiddleware
+from app.broker import broker
 import logging
 
 
@@ -11,11 +12,11 @@ dp = Dispatcher()
 
 
 async def on_startup() -> None:
-    pass
+    await broker.start()
 
 
 async def shutdown() -> None:
-    pass
+    await broker.close()
 
 
 dp.startup.register(on_startup)
