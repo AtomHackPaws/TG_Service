@@ -5,11 +5,20 @@ from app.keyboards.start import get_start_inline_buttons
 from app.callbacks_factory.base import UserCallbackData
 from magic_filter import F
 
+from app.models import Profile
+from app.db import Transaction
+
+
 start_router = Router()
 
 
 @start_router.message(Command("start"))
 async def cmd_start(message: Message):
+    user_data = message.from_user
+    
+    async with Transaction():
+        await Profile.create_user(id=user_data.id, username=user_data.username)
+    
     # TODO create_user
     builder = get_start_inline_buttons()
     await message.answer("Выберите действие:", reply_markup=builder)

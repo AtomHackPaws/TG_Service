@@ -12,8 +12,21 @@ async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False
 
 
 Base = declarative_base()
-
+    
 
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:  # type: ignore
         yield session
+
+
+class Transaction:
+    async def __aenter__(self):
+        self.session: AsyncSession = async_session()
+        return self
+
+    async def __aexit__(self, exception_type, exception, traceback):
+        if exception:
+            await self.session.rollback()
+        else:
+            await self.session.commit()
+        await self.session.close()
