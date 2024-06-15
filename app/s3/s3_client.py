@@ -38,7 +38,7 @@ class S3Service:
         # return await cls.s3_client.put_object(  # type: ignore
         #     Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
         # )  # type: ignore
-        
+
         await cls.s3_client.put_object(  # type: ignore
             Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
         )  # type: ignore
