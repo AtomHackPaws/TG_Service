@@ -1,12 +1,26 @@
-from aiogram.types import InlineKeyboardButton
-from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from app.callbacks_factory.base import UserCallbackData, CommunityCallbackData
 
 
-# TODO change buttons
 def get_community_buttons() -> InlineKeyboardButton:
-    builder = InlineKeyboardBuilder()
-    builder.button(text="Да", callback_data=UserCallbackData(action="user_profile"))
-    builder.button(text="Нет", callback_data=CommunityCallbackData(action="load_photo"))
-    builder.adjust(4)
-    return builder.as_markup(resize_keyboard=True)
+    inline_kb_full = InlineKeyboardMarkup(
+        row_width=2,
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="Да",
+                    callback_data=CommunityCallbackData(action="anonymous_yes").pack(),
+                ),
+                InlineKeyboardButton(
+                    text="Нет",
+                    callback_data=CommunityCallbackData(action="anonymous_no").pack(),
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Назад", callback_data=UserCallbackData(action="start").pack()
+                )
+            ],
+        ],
+    )
+    return inline_kb_full
