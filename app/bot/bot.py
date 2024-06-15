@@ -12,11 +12,13 @@ dp = Dispatcher()
 
 
 async def on_startup() -> None:
-    await broker.start()
+    # await broker.start()
+    pass
 
 
 async def shutdown() -> None:
-    await broker.close()
+    # await broker.close()
+    pass
 
 
 dp.startup.register(on_startup)
