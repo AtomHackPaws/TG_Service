@@ -30,6 +30,12 @@ def get_start_inline_buttons() -> InlineKeyboardButton:
             ],
             [
                 InlineKeyboardButton(
+                    text="Quiz",
+                    callback_data=CommunityCallbackData(action="quiz").pack(),
+                )
+            ],
+            [
+                InlineKeyboardButton(
                     text="Получить свой id",
                     callback_data=UserCallbackData(action="get_user_id").pack(),
                 ),
