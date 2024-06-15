@@ -56,9 +56,6 @@ async def send_photo(message: Message):
 @model_router.message(F.media_group_id)
 async def send_post_to_channel(message: Message, album: Album):
     message: SendMediaGroup = album.copy_to(chat_id=settings.CHANNEL_ID)
-    # TODO анонимно или нет message.from_user.username
-    # await bot.send_media_group(**dict(messag))
-
     try:
         await S3Service.get_s3_client()
 

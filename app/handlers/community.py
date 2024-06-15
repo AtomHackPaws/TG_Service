@@ -52,6 +52,7 @@ async def send_media_group(message: types.Message, album: Album, state: FSMConte
     new_message: SendMediaGroup = album.copy_to(chat_id=settings.CHANNEL_ID)
     new_message.media[0].caption = caption
     await bot.send_media_group(**dict(new_message))
+    await message.answer("Отправлено в комьюнити")
 
 
 @comunity_router.message(F.photo, Community.send)
@@ -61,6 +62,7 @@ async def send_photo(message: types.Message, state: FSMContext):
     caption = await add_not_anonymous(data, message.caption, message.from_user.username)
     media.append(InputMediaPhoto(media=message.photo[-1].file_id, caption=caption))
     await bot.send_media_group(settings.CHANNEL_ID, media)
+    await message.answer("Отправлено в комьюнити")
 
 
 @comunity_router.message(F.video, Community.send)
@@ -69,6 +71,7 @@ async def send_video(message: types.Message, state: FSMContext):
     caption = await add_not_anonymous(data, message.caption, message.from_user.username)
     media = InputMediaPhoto(media=message.video.file_id, caption=caption)
     await bot.send_media_group(settings.CHANNEL_ID, media)
+    await message.answer("Отправлено в комьюнити")
 
 
 @comunity_router.message(F.text, Community.send)
@@ -77,3 +80,4 @@ async def send_text(message: types.Message, state: FSMContext):
     caption = await add_not_anonymous(data, message.caption, message.from_user.username)
     message.caption = caption
     await bot.send_media_group(settings.CHANNEL_ID, message)
+    await message.answer("Отправлено в комьюнити")
