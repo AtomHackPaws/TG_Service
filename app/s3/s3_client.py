@@ -20,9 +20,8 @@ class S3Service:
         if cls.s3_client is None:
             session_ = await cls._get_s3_session()
             cls.s3_client = await session_.create_client(
-                region_name=settings.REGION_NAME,
                 service_name="s3",
-                endpoint_url=settings.S3_ENDPOINT_URL,
+                endpoint_url=settings.MINIO_LINK,
                 aws_access_key_id=settings.MINIO_ROOT_USER,
                 aws_secret_access_key=settings.MINIO_ROOT_PASSWORD,
             ).__aenter__()
@@ -36,9 +35,14 @@ class S3Service:
 
     @classmethod
     async def put_object(cls, filename: str, file: bytes) -> dict:
-        return await cls.s3_client.put_object(  # type: ignore
+        # return await cls.s3_client.put_object(  # type: ignore
+        #     Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
+        # )  # type: ignore
+        
+        await cls.s3_client.put_object(  # type: ignore
             Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
         )  # type: ignore
+        return f"{settings.MINIO_LINK}/{settings.MINIO_BUCKET}/{filename}"
 
     @classmethod
     async def close_s3_session(cls) -> None:
