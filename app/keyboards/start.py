@@ -3,6 +3,7 @@ from app.callbacks_factory.base import (
     UserCallbackData,
     CommunityCallbackData,
     ModelCallbackData,
+    QuizCallbackData,
 )
 
 
@@ -26,6 +27,12 @@ def get_start_inline_buttons() -> InlineKeyboardButton:
                 InlineKeyboardButton(
                     text="Помощь",
                     callback_data=CommunityCallbackData(action="help_community").pack(),
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text="Квиз",
+                    callback_data=QuizCallbackData(action="quiz").pack(),
                 )
             ],
             [

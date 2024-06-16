@@ -30,6 +30,11 @@ class Settings(BaseSettings):
             "host": self.POSTGRES_HOST,
             "port": self.POSTGRES_PORT,
         }
+    
+    
+    @property
+    def s3_url(self) -> dict:
+        return self.MINIO_LINK + '/' + self.MINIO_BUCKET
 
     @property
     def database_uri_async(self) -> str:
