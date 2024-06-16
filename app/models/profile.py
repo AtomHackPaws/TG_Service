@@ -1,5 +1,3 @@
-from typing import Optional
-import uuid
 import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger
@@ -18,7 +16,6 @@ class Profile(Base):
     created_at: Mapped[datetime] = mapped_column(
         nullable=False, server_default=sa.func.now()
     )
-    master_link: Mapped[Optional[uuid.UUID]] = mapped_column(nullable=True)
 
     results = relationship("Result", back_populates="profile", cascade="all, delete")
 

@@ -34,15 +34,11 @@ class S3Service:
         )  # type: ignore
 
     @classmethod
-    async def put_object(cls, filename: str, file: bytes) -> dict:
-        # return await cls.s3_client.put_object(  # type: ignore
-        #     Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
-        # )  # type: ignore
-
+    async def put_object(cls, filename: str, file: bytes) -> str:
         await cls.s3_client.put_object(  # type: ignore
             Bucket=settings.MINIO_BUCKET, Key=filename, Body=file
         )  # type: ignore
-        return f"{settings.MINIO_LINK}/{settings.MINIO_BUCKET}/{filename}"
+        return filename
 
     @classmethod
     async def close_s3_session(cls) -> None:

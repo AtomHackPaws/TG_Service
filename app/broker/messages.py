@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 class PhotoTopic(BaseModel):
     photo: List[str]
-    user: str
+    user: int
 
 
 class Data(BaseModel):
