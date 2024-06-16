@@ -11,3 +11,9 @@ class PhotoTopic(BaseModel):
 
 class Data(BaseModel):
     photo: PhotoTopic
+
+
+class Inference(BaseModel):
+    user: int
+    src: List[str]
+    src_marked: List[str]
