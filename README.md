@@ -83,4 +83,4 @@ foo@bar:~$ python main.py
 ```
 
 ## Где посомтреть работу:
-
+https://t.me/toni_atom_bot
