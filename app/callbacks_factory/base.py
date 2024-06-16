@@ -11,3 +11,6 @@ class CommunityCallbackData(CallbackData, prefix="community"):
 
 class ModelCallbackData(CallbackData, prefix="model"):
     action: str
+
+class QuizCallbackData(CallbackData, prefix="quiz"):
+    action: str

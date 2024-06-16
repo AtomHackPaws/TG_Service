@@ -19,6 +19,8 @@ cachetools = "5.3.1"
 aiokafka = "^0.10.0"
 faststream = {extras = ["kafka"], version = "^0.5.12"}
 punq = "^0.7.0"
+pilo = "^0.6.2"
+pillow = "^10.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
