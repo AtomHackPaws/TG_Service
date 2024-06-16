@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class QuizEnum(int, Enum):
     adj = 0
     int = 1
@@ -7,12 +8,13 @@ class QuizEnum(int, Enum):
     pro = 3
     non = 4
     background = 5
-    
+
     def get_enum_name_by_value(value):
         try:
             return QuizEnum(value).name
         except ValueError:
             return None
+
 
 deffects_name = {
     "adj": "Прилегающие деффекты",

@@ -1,8 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from app.callbacks_factory.base import (
-    QuizCallbackData,
-    UserCallbackData
-)
+from app.callbacks_factory.base import QuizCallbackData, UserCallbackData
+
 
 def get_quiz_buttons() -> InlineKeyboardButton:
     inline_kb_full = InlineKeyboardMarkup(
@@ -98,6 +96,7 @@ def get_start_quiz_buttons() -> InlineKeyboardButton:
         ],
     )
     return inline_kb_full
+
 
 def get_continue_quiz_buttons() -> InlineKeyboardButton:
     inline_kb_full = InlineKeyboardMarkup(
