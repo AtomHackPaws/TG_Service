@@ -55,7 +55,7 @@ async def send_video(message: Message):
                     profile_id=message.from_user.id,
                 )
 
-            await message.answer(link)
+            await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
         await S3Service.close_s3_session()
 
@@ -77,7 +77,7 @@ async def send_photo(message: Message):
                     profile_id=message.from_user.id,
                 )
 
-            await message.answer(link)
+            await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
         await S3Service.close_s3_session()
 
@@ -110,6 +110,6 @@ async def send_post_to_channel(message: Message, album: Album):
             )
 
         await message.reply("Сообщение отправлено в комьюнити!")
-        await message.answer("\n".join(links))
+        await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
         await S3Service.close_s3_session()
