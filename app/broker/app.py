@@ -9,4 +9,4 @@ broker = KafkaBroker(settings.KAFKA_URL)
 
 app = FastStream(broker)
 
-broker_send = broker.publisher("photo", batch=True)
+broker_send = broker.publisher("photo")

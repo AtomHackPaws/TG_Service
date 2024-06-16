@@ -74,7 +74,9 @@ async def send_photo(message: Message):
                 )
 
             await broker_send.publish(
-                Data(photo=PhotoTopic(id=id, photo=[link], user=message.from_user.id))
+                Data(photo=PhotoTopic(id=id, photo=[link], user=message.from_user.id)),
+                topic="photo",
+                headers={"content-type": "application/json"},
             )
 
             await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
