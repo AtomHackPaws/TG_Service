@@ -8,4 +8,5 @@ class PhotoTopic(BaseModel):
 
 
 class Data(BaseModel):
+    id: str
     photo: PhotoTopic

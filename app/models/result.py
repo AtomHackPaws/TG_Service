@@ -26,5 +26,9 @@ class Result(Base):
 
     @classmethod
     async def create_result(cls, result, profile_id):
-        stmt = insert(Result).values(result=result, profile_id=profile_id)
-        await db_session.get().execute(stmt)
+        stmt = (
+            insert(Result)
+            .values(result=result, profile_id=profile_id)
+            .returning(Result.id)
+        )
+        return await db_session.get().execute(stmt)

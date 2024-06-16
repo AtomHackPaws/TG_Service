@@ -45,15 +45,15 @@ async def send_video(message: Message):
             await S3Service.get_s3_client()
             link = await download_and_upload_media(message.video, "mp4")
 
-            await broker_send.publish(
-                Data(photo=PhotoTopic(photo=[link], user=message.from_user.id))
-            )
-
             async with Transaction():
-                await Result.create_result(
+                id = await Result.create_result(
                     result=json.dumps([{"score": 0.0, "label": 0, "link": ""}]),
                     profile_id=message.from_user.id,
                 )
+
+            await broker_send.publish(
+                Data(id=id, photo=PhotoTopic(photo=[link], user=message.from_user.id))
+            )
 
             await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
@@ -67,15 +67,15 @@ async def send_photo(message: Message):
             await S3Service.get_s3_client()
             link = await download_and_upload_media(message.photo[-1], "jpg")
 
-            await broker_send.publish(
-                Data(photo=PhotoTopic(photo=[link], user=message.from_user.id))
-            )
-
             async with Transaction():
-                await Result.create_result(
+                id = await Result.create_result(
                     result=json.dumps([{"score": 0.0, "label": 0, "link": ""}]),
                     profile_id=message.from_user.id,
                 )
+
+            await broker_send.publish(
+                Data(id=id, photo=PhotoTopic(photo=[link], user=message.from_user.id))
+            )
 
             await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
@@ -99,15 +99,18 @@ async def send_post_to_channel(message: Message, album: Album):
             )
         links = await asyncio.gather(*tasks)
 
-        await broker_send.publish(
-            Data(photo=PhotoTopic(photo=links, user=message.from_user.id))
-        )
-
         async with Transaction():
-            await Result.create_result(
+            id = await Result.create_result(
                 result=json.dumps([{"score": 0.0, "label": 0, "link": ""}]),
-                profile_id=message.from_user.id,
+                profile_id=album.messages[-1].from_user.id,
             )
+
+        await broker_send.publish(
+            Data(
+                id=id,
+                photo=PhotoTopic(photo=links, user=album.messages[-1].from_user.id),
+            )
+        )
 
         await message.reply("Сообщение отправлено в комьюнити!")
         await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
