@@ -31,4 +31,5 @@ class Result(Base):
             .values(result=result, profile_id=profile_id)
             .returning(Result.id)
         )
-        return await db_session.get().execute(stmt)
+        result = await db_session.get().execute(stmt)
+        return result.scalars().first()

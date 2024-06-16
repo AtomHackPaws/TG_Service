@@ -1,9 +1,10 @@
+from uuid import UUID
 from typing import List
 from pydantic import BaseModel
 
 
 class PhotoTopic(BaseModel):
-    id: str
+    id: UUID
     photo: List[str]
     user: int
 
