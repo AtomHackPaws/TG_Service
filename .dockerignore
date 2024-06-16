@@ -6,3 +6,9 @@ Dockerfile
 README.md
 .helm/
 .dockerignore
+.env.example
+.pre-commit-config.yaml
+docker-compose.*.yaml
+.ruff_cache/
+.github/
+.gitignore

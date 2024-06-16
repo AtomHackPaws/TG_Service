@@ -71,6 +71,18 @@ services:
       - DYNAMIC_CONFIG_ENABLED=true
     networks:
       - atom-dev
+  bot:
+    container_name: bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - kafka-ui
+    networks:
+      - atom-dev
 
 volumes:
   postgres_data:
