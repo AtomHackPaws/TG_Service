@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     MINIO_BUCKET: str
     CHANNEL_ID: int
     KAFKA_URL: str = ""
+    KAFKA_SERVER: str
 
     class Config:
         env_file = ".env"
