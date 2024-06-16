@@ -3,10 +3,10 @@ from pydantic import BaseModel
 
 
 class PhotoTopic(BaseModel):
+    id: str
     photo: List[str]
     user: int
 
 
 class Data(BaseModel):
-    id: str
     photo: PhotoTopic

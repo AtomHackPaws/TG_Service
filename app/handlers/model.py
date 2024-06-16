@@ -52,7 +52,7 @@ async def send_video(message: Message):
                 )
 
             await broker_send.publish(
-                Data(id=id, photo=PhotoTopic(photo=[link], user=message.from_user.id))
+                Data(photo=PhotoTopic(id=id, photo=[link], user=message.from_user.id))
             )
 
             await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
@@ -74,7 +74,7 @@ async def send_photo(message: Message):
                 )
 
             await broker_send.publish(
-                Data(id=id, photo=PhotoTopic(photo=[link], user=message.from_user.id))
+                Data(photo=PhotoTopic(id=id, photo=[link], user=message.from_user.id))
             )
 
             await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
@@ -107,8 +107,9 @@ async def send_post_to_channel(message: Message, album: Album):
 
         await broker_send.publish(
             Data(
-                id=id,
-                photo=PhotoTopic(photo=links, user=album.messages[-1].from_user.id),
+                photo=PhotoTopic(
+                    id=id, photo=links, user=album.messages[-1].from_user.id
+                ),
             )
         )
 
