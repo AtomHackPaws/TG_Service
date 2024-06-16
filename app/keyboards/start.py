@@ -37,12 +37,6 @@ def get_start_inline_buttons() -> InlineKeyboardButton:
             ],
             [
                 InlineKeyboardButton(
-                    text="Получить свой id",
-                    callback_data=UserCallbackData(action="get_user_id").pack(),
-                ),
-            ],
-            [
-                InlineKeyboardButton(
                     text="👋🌟🤝 К сообществу", url="https://t.me/+56QfeI2uNXw4ZDIy"
                 )
             ],
