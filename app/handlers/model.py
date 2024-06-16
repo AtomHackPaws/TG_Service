@@ -32,7 +32,7 @@ async def load_photo(callback: CallbackQuery, state: FSMContext):
     # TODO s3 load video/ photo
 
     await callback.message.edit_text(
-        text="Отправьте сообщение которое хотите опубликовать в комьюнити:",
+        text="Отправьте сообщение которое хотите отправить на разметку:",
         reply_markup=None,
     )
     await state.set_state(Model.send)
@@ -115,7 +115,7 @@ async def send_post_to_channel(message: Message, album: Album):
             )
         )
 
-        await message.reply("Сообщение отправлено в комьюнити!")
+        await message.reply("Сообщение отправлено")
         await message.answer("Подождите, пожалуйста, выполняется обработка медиа")
     finally:
         await S3Service.close_s3_session()
