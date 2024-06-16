@@ -22,7 +22,7 @@ quiz_router = Router()
 @quiz_router.callback_query(QuizCallbackData.filter(F.action == "quiz"))
 async def community_ask_anonymous(callback: CallbackQuery, state: FSMContext):
     image = URLInputFile(
-        settings.s3_url + "/test_image.jpg", filename="python-logo.jpg"
+        settings.s3_url + "/test_image.png", filename="python-logo.png"
     )
     await callback.message.delete()
     await callback.message.answer_photo(
