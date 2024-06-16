@@ -4,7 +4,9 @@ from app.handlers import list_of_routes
 from app.middlewares.album import AlbumMiddleware
 from app.broker import broker
 import logging
-
+from aiogram.types import ChatMemberUpdated
+from aiogram.filters.chat_member_updated import \
+    ChatMemberUpdatedFilter, MEMBER, KICKED
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,7 +34,6 @@ def bind_routes(dp: Dispatcher) -> None:
     """
     for route in list_of_routes:
         dp.include_router(route)
-
 
 async def main():
     bind_routes(dp)
